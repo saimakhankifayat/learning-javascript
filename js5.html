@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Registration</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    div {
+      background-color: #ffffff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 300px;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: #444;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    input.invalid-email {
+      border-color: red;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background-color 0.3s;
+    }
+    .error-message {
+      color: red;
+      font-size: 12px;
+      margin-top: -15px;
+      margin-bottom: 10px;
+      display: none; /* Initially hidden */
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1>User Registration</h1>
+    <form action="register.php" method="post">
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email">
+      <div class="error-message">
+        Invalid email format.
+
+      </div>
+      <button type="button" onclick="validateForm()">Register</button>
+    </form>
+  </div>
+
+  <script>
+    function validateForm() {
+      const emailInput = document.getElementById("email");
+      const vEmail = emailInput.value;
+      const isValidEmail = vEmail.includes("@") && vEmail.includes(".");
+
+      // Remove previous error class, if any
+      emailInput.classList.remove("invalid-email");
+
+      if (isValidEmail) {
+        document.querySelector(".error-message").style.display = "none"; // Show error message
+        
+      } else {
+        emailInput.classList.add("invalid-email");
+        document.querySelector(".error-message").style.display = "inline"; // Show error message
+      }
+
+    }
+  </script>
+</body>
+
+</html>
+sss

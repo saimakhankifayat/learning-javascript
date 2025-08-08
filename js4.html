@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/student-form.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="dashborad.html">Dashboard</a></li>
+                <li><a href="analytics.html">Analytics</a></li>
+                <li><a href="teacher-form.html">Teacher form</a></li>
+                <li><a href="#">Student </a>
+                    <ul>
+                        <li><a href="student-form.html">Student Record </a></li>
+                        <li><a href="student-dmc-create.html">Create DMC </a></li>
+                        <li><a href="student-dmc.html">view DMC</a></li>
+                    </ul>
+
+                </li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="index.html">Sign out</a></li>
+            </ul>
+        </nav>
+        <main class="main-content">
+            <div class="form">
+                <div class="dmc">
+
+                    <div class="dmc-title">
+                        <h1>Detail Marks Sheet (DMC)</h1>
+                    </div>
+
+                    <div class="dmc-header">
+                        <div class="school-logo">
+                            <img src="https://images.pexels.com/photos/1337380/pexels-photo-1337380.jpeg"
+                                alt="Student Picture" class="student-pic">
+                        </div>
+                        <div class="student-info">
+                            <p><strong>Student Name:</strong>
+                            <div id="student_name"></div>
+                            </p>
+                            <p><strong>Father's Name:</strong>
+                            <div id="student_father_name"></div>
+                            </p>
+                            <p><strong>Class:</strong>
+                            <div id="student_class"></div>
+                            </p>
+                            <p><strong>Student ID:</strong>
+                            <div id="student_id"></div>
+                            </p>
+                        </div>
+                        <div class="student-pic-container">
+                            <img src="https://images.pexels.com/photos/2169434/pexels-photo-2169434.jpeg"
+                                alt="Student Picture" class="student-pic">
+                        </div>
+                    </div>
+
+                    <div class="mypage">
+                        <form method="get" action="student-dmc.html">
+                            <table>
+                                <tr>
+                                    <td>SNo.</td>
+                                    <td>Subject</td>
+                                    <td>Total Marks</td>
+                                    <td>Obtained Marks</td>
+                                    <td>Grade</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>English</td>
+                                    <td>100 </td>
+                                    <td> <input name="English" id="English" value="0"></td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>COMPUTER</td>
+                                    <td>100 </td>
+                                    <td> <input name="Computer" id="Computer" value="0"></td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>PAK.STUDY</td>
+                                    <td>100 </td>
+                                    <td> <input name="Pak_Study" id="Pak_Study" value="0"></td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Math</td>
+                                    <td>100 </td>
+                                    <td> <input name="Math" id="Math" value="0"></td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>URDU</td>
+                                    <td>100 </td>
+                                    <td> <input name="Urdu" id="Urdu" value="0"></td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>ISLAMIYAT</td>
+                                    <td>100 </td>
+                                    <td> <input name="Islamiyat" id="Islamiyat" value="0"></td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>SCIENCE</td>
+                                    <td>100 </td>
+                                    <td> <input name="Science" id="Science" value="0"></td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"><strong>OBTAINED MARKS</strong>
+                                    </td>
+                                    <td><strong>
+                                            <div id="total_obtained_marks">0</div>
+
+                                        </strong></td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"><strong>OBTAINED
+                                            PERCENTAGE</strong> </td>
+                                    <td><strong>
+                                            <div id="percentage">0%</div>
+                                        </strong></td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"><strong>OBTAINED Grade</strong>
+                                    </td>
+                                    <td><strong>
+                                            <div id="grade">A</div>
+
+                                        </strong></td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </table>
+                            <button type="button" onclick="gettotalmarks()">Calculate
+                                Marks</button>
+                            <button type="button" onclick="getNextStudent()">NEXT</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            &copy; 2023 Drixal School Management System. All rights
+            reserved.
+        </footer>
+    </div>
+</body>
+
+</html>
+<script>
+    // Sample student object to demonstrate functionality
+    const objStudent = {
+        stdName: "John Doe",
+        fatherName: "Mr. Smith",
+        class: "10th Grade",
+        studentId: "2025-10-AK",
+        English: 70,
+        Computer: 60,
+        Pak_Study: 90,
+        Math: 100,
+        Urdu: 70,
+        Islamiyat: 80,
+        Science: 80,
+        total_obtained_marks: function () {
+            return this.English + this.Computer + this.Pak_Study + this.Math + this.Urdu + this.Islamiyat + this.Science;
+        },
+        percentage:function () {
+            return (this.total_obtained_marks() / 700) * 100; // Assuming total marks are 700
+        },
+        grade:function () {
+            const perc = this.percentage();
+            if (perc >= 90) return "A+";
+            else if (perc >= 80) return "A";
+            else if (perc >= 70) return "B";
+            else if (perc >= 60) return "C";
+            else if (perc >= 50) return "D";
+            else return "F";
+        }
+
+    };
+
+    document.getElementById("student_name").innerHTML = objStudent.stdName;
+    document.getElementById("student_father_name").innerHTML = objStudent.fatherName;
+    document.getElementById("student_class").innerHTML = objStudent.class;
+    document.getElementById("student_id").innerHTML = objStudent.studentId;
+    document.getElementById("total_obtained_marks").innerHTML = objStudent.total_obtained_marks();
+    document.getElementById("percentage").innerHTML = objStudent.percentage().toFixed(2) + "%";
+    document.getElementById("grade").innerHTML = objStudent.grade();
+
+
+
+
+
+
+    function getNextStudent() {
+        // Logic to fetch the next student's data
+        // For demonstration, we will just log a message
+        console.log("Fetching next student...");
+        // You can implement the logic to update the student data here
+        objStudent.stdName = " saima"; // Example of updating the student name
+        objStudent.fatherName = "Mr. Khan"; // Example of updating the father's name
+        objStudent.class = "11th Grade"; // Example of updating the class   
+        objStudent.studentId = "2025-11-BK"; // Example of updating the student ID
+        objStudent.English = 80; // Example of updating the marks
+        objStudent.Computer = 90; // Example of updating the marks      
+        objStudent.Pak_Study = 85; // Example of updating the marks
+        objStudent.Math = 75; // Example of updating the marks  
+        objStudent.Urdu = 65; // Example of updating the marks
+        objStudent.Islamiyat = 70; // Example of updating the marks
+        objStudent.Science = 95; // Example of updating the marks
+        // Update the HTML elements with the new student data
+
+
+
+
+        document.getElementById("student_name").innerHTML = objStudent.stdName;
+        document.getElementById("student_father_name").innerHTML = objStudent.fatherName;
+        document.getElementById("student_class").innerHTML = objStudent.class;
+        document.getElementById("student_id").innerHTML = objStudent.studentId;
+        document.getElementById("total_obtained_marks").innerHTML = objStudent.total_obtained_marks();
+        document.getElementById("percentage").innerHTML = objStudent.percentage().toFixed(2) + "%";
+        document.getElementById("grade").innerHTML = objStudent.grade();
+    }
+
+
+
+
+
+
+
+
+
+
+</script>

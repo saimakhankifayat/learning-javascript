@@ -1,0 +1,70 @@
+<html>
+<body>
+<form>
+<input type="text" placeholder="type anything" id="text1" name="text1" >
+<button type="button" id="swap_names"  onclick="swapNames()">swap name</button>
+<button type="button" id="addName"  onclick="addNameToArray()">ADD NAME</button>
+<button type="button" id="printVars"  onclick="printVariables()">PRINT VARIABLES</button>
+<button type="button" id="printArray" onclick="printArrayNames()" >PRINT ARRAY</button>
+</form>
+<div id="results">
+</div>
+</body>
+</html>
+<script>
+var name1 = "zara";
+var name2 = "sarim";
+var name3 = "saima";
+var name4 = "mishi";
+var name5 = "sara";
+
+function printVariables() {
+  //document.getElementById("results").innerHTML = "I am the results";
+  //document.getElementById("results").innerHTML = name1 + name2 + name3 + name4 + name5;
+ // document.getElementById("results").innerHTML = name1 +" <br>" + name2 +" <br>" + name3 +" <br>" + name4 +" <br>" + name5;
+  document.getElementById("results").innerHTML =  "name1:"+  name1 +" <br>" + "name2:"+name2 +" <br>" +"name3:"+ name3 +" <br>" + "name4:"+name4 +" <br>" + "name5:"+ name5;
+}
+
+
+// understanding array 
+// Array is a consigative   memory loction of similar data 
+ const familyNames =[" zara ", "saima", "sara", "mishi", "sarim" ,"mom","dad","jan"];
+  const colors =[ "red","green","blue","black","purple","yellow","gray","pink"]
+ function printArrayNames_old() {  
+ document.getElementById("results").innerHTML = familyNames [0]+familyNames [1]+familyNames [2]+familyNames [3]+familyNames [4];
+ }
+ function printArrayNames() {  
+ var count= familyNames.length;
+var nameList="";
+familyNames.sort();
+	for ( var i = 0; i< count;i++){
+	//	nameList= nameList +" <h1 style='color:"+ colors[i]+"'>" +familyNames [i] + "<h1>  ";
+		nameList= nameList +" <h1 style='color:"+ colors[i]+"'>" +"Name "+(i+1)+" : "+familyNames [i] + "<h1>  ";
+	}
+	document.getElementById("results").innerHTML =  nameList;
+		
+
+ }
+ 
+	// this function wil add the textbox value into array 	
+		function addNameToArray(){
+		var newName=document.getElementById("text1").value;
+		if (newName.length=== 0) {
+			return;
+		}
+		
+		//familyNames.push(document.getElementById("text1").value);
+		familyNames.push(newName);
+		document.getElementById("text1").value="";
+		}
+		
+		//this fuction with swap the 1st two names 
+	function  swapNames(){
+	var  aName= familyNames[0];
+	var bName=familyNames[1];
+	 familyNames[0]=bName;
+	 familyNames[1]=aName;
+	}
+
+</script>
+

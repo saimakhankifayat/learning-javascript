@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saima Chat Messenger</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #d9e4f5, #f5f7fa);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .chat-container {
+      width: 600px;
+      max-width: 95vw;
+      height: 80vh;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-header {
+      text-align: center;
+      padding: 18px;
+      font-size: 1.4rem;
+      color: #333;
+      background: #e5e7eb;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .chat-history {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      color: #333;
+      font-size: 1rem;
+      display: flex;
+      flex-direction: column;
+      scroll-behavior: smooth;
+    }
+
+    .chat-history::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .chat-history::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+    }
+
+    .chat-input-area {
+      padding: 12px 16px;
+      display: flex;
+      gap: 10px;
+      background: #f3f4f6;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .chat-input-area input[type="text"] {
+      flex: 1;
+      padding: 12px 14px;
+      border: none;
+      border-radius: 10px;
+      background: #e5e7eb;
+      color: #333;
+      font-size: 1rem;
+      outline: none;
+      transition: background 0.3s ease;
+    }
+
+    .chat-input-area input[type="text"]::placeholder {
+      color: #6b7280;
+    }
+
+    .chat-input-area input[type="button"] {
+      padding: 12px 24px;
+      background-color: #6b7280;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .chat-input-area input[type="button"]:hover {
+      background-color: #4b5563;
+    }
+
+    .chat-bubble {
+      padding: 10px 14px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      width: fit-content;
+      max-width: 80%;
+      line-height: 1.5;
+    }
+
+    .chat-bubble.bot {
+      align-self: flex-start;
+      background-color: #e5e7eb;
+      color: #333;
+      border-top-left-radius: 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .chat-bubble.user {
+      align-self: flex-end;
+      background-color: #6b7280;
+      color: #fff;
+      border-top-right-radius: 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    @media (max-width: 600px) {
+      .chat-container {
+        height: 100vh;
+        width: 100%;
+        border-radius: 0;
+      }
+
+      .chat-input-area {
+        flex-wrap: wrap;
+      }
+
+      .chat-input-area input[type="text"] {
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="chat-container">
+    <div class="chat-header" id="chatHeader">Saima AI ChatBot</div>
+    <div class="chat-history" id="chatHistory">
+      <div class="chat-bubble bot">Welcome, Saima. How can I assist you today?</div>
+      <div class="chat-bubble bot">I am an AI ChatBot.</div>
+    </div>
+    <form class="chat-input-area" action="#" method="post" name="chatInputArea" id="chatInputArea">
+      <input type="text" placeholder="Type your message..." name="message" required id="message">
+      <input type="button" value="Send" onclick="sendMessage()">
+      <input type="button" value="Receive" onclick="recieveMessage('hi')">
+    </form>
+  </div>
+
+  <script>
+    //Define Global Variables
+    var SpecialUserName = "saima";
+    var IsLastMessageContainsSpecialUserName = false;
+
+    //This function is used to send a message from the user to the chat history.
+    function sendMessage(myMessage = "") {
+      var newFormatedMessage = "";
+      var oldMessages = document.getElementById("chatHistory").innerHTML;
+      var newMessage = document.getElementById("message").value;
+      var allMessages = "";
+
+      if (newMessage.trim().length === 0) {
+        playBeep();
+        return;
+      } else if (newMessage.toLowerCase().trim() === SpecialUserName) {
+        // Special greeting when the user enters only their name
+        newFormatedMessage = `<div class="chat-bubble user">${newMessage}</div>`;
+        allMessages = oldMessages + newFormatedMessage;
+        document.getElementById("chatHistory").innerHTML = allMessages;
+        playBeep();
+        document.getElementById("message").value = "";
+        scrollToBottom();
+        // Add bot's special greeting
+        setTimeout(() => {
+          recieveMessage(`Welcome back, ${SpecialUserName}! <img src="heart.png" alt="heart" style="vertical-align: middle; width: 20px; height: 20px;"> So happy to see you!`);
+        }, 500);
+        return;
+      } else if (newMessage.toLowerCase().indexOf(SpecialUserName) !== -1) {
+        newFormatedMessage = `<div class="chat-bubble user"><img src="heart.png" alt="heart" style="vertical-align: middle; width: 20px; height: 20px;"> ${newMessage} <img src="heart.png" alt="heart" style="vertical-align: middle; width: 20px; height: 20px;"></div>`;
+        IsLastMessageContainsSpecialUserName = true;
+      } else {
+        newFormatedMessage = `<div class="chat-bubble user">${newMessage}</div>`;
+      }
+
+      allMessages = oldMessages + newFormatedMessage;
+      document.getElementById("chatHistory").innerHTML = allMessages;
+      playBeep();
+      document.getElementById("message").value = "";
+      scrollToBottom();
+    }
+
+    //This function is used to receive a message from the bot to the chat history.
+    function recieveMessage(myMessage = "") {
+      var oldMessages = document.getElementById("chatHistory").innerHTML;
+      var newFormatedMessage = "";
+      var allMessages = "";
+      if (IsLastMessageContainsSpecialUserName == true) {
+        myMessage = `Welcome <img src="heart.png" alt="heart" style="vertical-align: middle; width: 20px; height: 20px;"> ${myMessage} <img src="heart.png" alt="heart" style="vertical-align: middle; width: 20px; height: 20px;">`;
+        IsLastMessageContainsSpecialUserName = false;
+      }
+      newFormatedMessage = `<div class="chat-bubble bot">${myMessage}</div>`;
+      
+      allMessages = oldMessages + newFormatedMessage;
+      document.getElementById("chatHistory").innerHTML = allMessages;
+      playBeep();
+      scrollToBottom();
+    }
+
+    //This function plays a beep sound when a message is sent or received.
+    //Make sure to have a beep.mp3 file in the same directory as this HTML file
+    function playBeep() {
+      const beep = new Audio('beep.mp3');
+      beep.play().catch(error => {
+        console.error("Audio playback failed:", error);
+      });
+    }
+
+    //This function scrolls the chat history to the bottom to show the latest message.
+    function scrollToBottom() {
+      var chatHistory = document.getElementById("chatHistory");
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+    }
+
+    function startReceivingMessages() {
+      setInterval(() => recieveMessage("hi"), 3000);
+    }
+    //startReceivingMessages();
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Registeration</title>
+ <style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f9fc;
+    color: #333;
+	
+  }
+
+  form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+	margin : auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+	
+  }
+
+  label {
+    display: block;
+    font-weight: bold;
+	margin-bottom : 5px;
+	margin-top : 6px;
+  }
+  input[type=text] {
+  width: 90%;
+  padding: 10px;
+  margin: 10px;
+  border-top: none;
+  border-left:none;
+  border-right: none;
+  border-bottom:dotted 1px gray;
+  }
+
+
+  .error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+    display: none;
+  }
+
+  .setGreenBorder {
+    border: 2px solid green !important;
+  }
+
+  .setRedBorder {
+    border: 2px solid red !important;
+  }
+
+  button {
+    margin-top: 15px;
+    padding: 10px;
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    font-size: 1em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+</head>
+
+<body>
+  <div>
+    <form id="registerationForm" name="registerationForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" onkeydown="checkUsername()" placeholder="Enter your username">
+      <div class="error-message" id="usernameError">
+        please enter a valid username
+      </div>
+
+      <label for="password">Password:</label>
+      <input type="text" id="password" onkeydown="checkPassword()" placeholder="Enter your password">
+      <div class="error-message" id="passwordError">
+        please enter a valid password
+      </div>
+
+      <label for="email">Email:</label>
+      <input type="text" id="email" onkeydown="checkEmail()" placeholder="Enter your email">
+      <div class="error-message" id="emailError">
+        please enter a valid email
+      </div>
+
+     <button type="button" onclick="validateForm()">Register</button>
+
+    </form>
+  </div>
+
+</body>
+</html>
+
+<script>
+
+var isFormReadyToSubmit = false;
+var isEmailOk = false;
+var isUsernameOk = false;
+var isPasswordOk = false;
+/*verify username */
+  function checkUsername() {
+    var username = document.getElementById("username").value;
+    console.log("testing");
+
+    if (username.length < 8) {
+	 isUsernameOk = true;
+      document.getElementById("username").classList.add("setRedBorder");
+	  document.getElementById("username").classList.remove("setGreenBorder"); 
+    }else{
+		 isUsernameOk = false;
+
+	 document.getElementById("username").classList.remove("setRedBorder");
+	       document.getElementById("username").classList.add("setGreenBorder");
+	}
+	    
+  }
+  
+  /* check password */
+    function checkPassword() {
+	
+    var username = document.getElementById("password").value;
+    console.log("testing");
+
+    if (username.length < 8) {
+	isPasswordOk = true;
+      document.getElementById("password").classList.add("setRedBorder");
+    }else{
+	isPasswordOk = false;
+	 document.getElementById("password").classList.remove("setRedBorder");
+	       document.getElementById("password").classList.add("setGreenBorder");
+		  }
+}
+	    
+  
+  /* check Email */
+  function checkEmail() {
+   var vemail= document.getElementById("email").value;
+   console.log(vemail);
+   
+   if (vemail.length > 6 ) {
+   isEmailOk =true;
+		if (vemail.indexOf("@")>0) {
+		
+			       document.getElementById("email").classList.add("setGreenBorder");
+				   document.getElementById("email").classList.remove("setRedBorder");
+
+		} else{ 
+		isEmailOk = false;
+			 document.getElementById("email").classList.add("setRedBorder");
+		}
+		
+     } 
+}			 
+function validateForm()  {
+	isFormReadyToSubmit = false;
+	if (isEmailOk ==true && isPasswordOk== true && isUsernameOk== true ){
+		// everything is okey //
+	 	isFormReadyToSubmit= true; 
+		alert("Form has been submitted");
+	}
+ }
+	
+	
+	
+	
+	
+	
+</script>
