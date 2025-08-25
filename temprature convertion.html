@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Temperature Converter</title>
+  <style>
+    :root{
+      --bg: #0f172a;         /* slate-900 */
+      --panel: #111827;      /* gray-900 */
+      --panel-2: #0b1220;    
+      --text: #e5e7eb;       /* gray-200 */
+      --muted: #9ca3af;      /* gray-400 */
+      --accent: #22d3ee;     /* cyan-400 */
+      --accent-2: #60a5fa;   /* blue-400 */
+      --danger: #ef4444;     /* red-500 */
+      --ring: rgba(34,211,238,.35);
+    }
+
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(34,211,238,.15), transparent 60%),
+        radial-gradient(1200px 600px at 110% 110%, rgba(96,165,250,.15), transparent 60%),
+        linear-gradient(180deg, #0b1020, #0a0f1c 40%, #0a0e19);
+      display:grid; place-items:center;
+      padding: 24px;
+    }
+
+    .card{
+      width:min(900px, 100%);
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border: 1px solid rgba(255,255,255,.06);
+      box-shadow: 0 20px 80px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.03) inset;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .header{
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .title{
+      font-weight: 700; font-size: clamp(18px, 3.2vw, 28px);
+      letter-spacing:.2px;
+    }
+    .sub{ color:var(--muted); font-size: 13px; }
+
+    .content{ padding: 20px; display:grid; gap:18px; }
+
+    .grid{
+      display:grid; gap:14px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width:700px){
+      .grid{ grid-template-columns: 1.2fr .8fr; }
+    }
+
+    .group{ background: rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:16px; }
+    .group h3{ margin:0 0 10px; font-size:14px; color:var(--muted); font-weight:600; letter-spacing:.3px; }
+
+    label{ display:block; font-size:12px; color:var(--muted); margin:0 0 6px; }
+
+    .row{ display:grid; grid-template-columns: 1fr 180px; gap:10px; }
+    .row-compact{ display:grid; grid-template-columns: repeat(2, 1fr); gap:10px; }
+
+    input[type="number"], select, input[readonly]{
+      width:100%;
+      background:#0b1220;
+      color:var(--text);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding: 12px 12px;
+      outline:none;
+      transition: border-color .2s, box-shadow .2s, transform .05s;
+    }
+    input[type="number"]:focus, select:focus, input[readonly]:focus{
+      border-color: var(--accent);
+      box-shadow: 0 0 0 6px var(--ring);
+    }
+    input[readonly]{ opacity:.95; }
+
+    .outputs{ display:grid; gap:10px; }
+    .output-row{ display:grid; grid-template-columns: 1fr 120px; gap:10px; align-items:center; }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      border:1px solid rgba(255,255,255,.08);
+      background: #0b1220;
+      color: var(--text);
+      padding: 10px 14px; border-radius: 12px; cursor:pointer; font-weight:600;
+      transition: transform .05s ease, box-shadow .15s ease, border-color .2s;
+      user-select: none;
+    }
+    .btn:hover{ border-color: rgba(255,255,255,.18); box-shadow: 0 0 0 4px rgba(255,255,255,.03); }
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{ background: linear-gradient(180deg, #0c1a2a, #0b1523); border-color: rgba(34,211,238,.35); }
+
+    .footer{
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+      padding: 14px 20px; border-top:1px solid rgba(255,255,255,.06);
+    }
+    .hint{ color:var(--muted); font-size:12px; }
+
+    .chip{
+      display:inline-flex; align-items:center; gap:8px; padding: 6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.1); color:var(--muted); font-size:12px;
+      background: rgba(255,255,255,.02);
+    }
+    .link{ color: var(--accent); text-decoration:none; border-bottom:1px dashed transparent; }
+    .link:hover{ border-color: var(--accent); }
+    .danger{ color: var(--danger); }
+  </style>
+</head>
+<body>
+  <div class="card" role="application" aria-label="Temperature unit converter">
+    <div class="header">
+      <div>
+        <div class="title">Temperature Converter</div>
+        <div class="sub">Convert between Celsius (°C), Fahrenheit (°F), Kelvin (K), and Rankine (°R) instantly.</div>
+      </div>
+      <div class="chip" title="Precision for outputs">
+        Decimals
+        <select id="decimals" aria-label="Decimal places">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="grid">
+        <!-- Input block -->
+        <div class="group" aria-labelledby="input-heading">
+          <h3 id="input-heading">Enter a value</h3>
+          <div class="row">
+            <div>
+              <label for="value">Temperature</label>
+              <input id="value" type="number" step="any" placeholder="e.g., 25" autocomplete="off" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="from">From unit</label>
+              <select id="from">
+                <option value="C">Celsius (°C)</option>
+                <option value="F">Fahrenheit (°F)</option>
+                <option value="K">Kelvin (K)</option>
+                <option value="R">Rankine (°R)</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn primary" id="convertBtn" aria-label="Convert now">Convert</button>
+            <button class="btn" id="clearBtn" aria-label="Clear all">Clear</button>
+          </div>
+        </div>
+
+        <!-- Output block -->
+        <div class="group" aria-labelledby="out-heading">
+          <h3 id="out-heading">Results</h3>
+          <div class="outputs" id="outputs">
+            <div class="output-row">
+              <div>
+                <label for="outC">Celsius (°C)</label>
+                <input id="outC" type="text" readonly value="—" />
+              </div>
+              <button class="btn" data-copy="#outC" aria-label="Copy Celsius">Copy</button>
+            </div>
+            <div class="output-row">
+              <div>
+                <label for="outF">Fahrenheit (°F)</label>
+                <input id="outF" type="text" readonly value="—" />
+              </div>
+              <button class="btn" data-copy="#outF" aria-label="Copy Fahrenheit">Copy</button>
+            </div>
+            <div class="output-row">
+              <div>
+                <label for="outK">Kelvin (K)</label>
+                <input id="outK" type="text" readonly value="—" />
+              </div>
+              <button class="btn" data-copy="#outK" aria-label="Copy Kelvin">Copy</button>
+            </div>
+            <div class="output-row">
+              <div>
+                <label for="outR">Rankine (°R)</label>
+                <input id="outR" type="text" readonly value="—" />
+              </div>
+              <button class="btn" data-copy="#outR" aria-label="Copy Rankine">Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="hint">
+        Tip: type a value and choose a unit. Results update on input, change, or when you press <kbd>Enter</kbd>.
+      </div>
+      <div class="hint">
+        <a class="link" href="#" id="copyAll">Copy all</a> ·
+        <a class="link" href="#" id="pasteDemo">Paste demo</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Utilities ---
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+    function roundTo(n, d){
+      if(!isFinite(n)) return "—";
+      const p = Math.pow(10, d);
+      return Math.round((n + Number.EPSILON) * p) / p;
+    }
+
+    // Conversion core (returns all units given any input)
+    function convertAll(value, from){
+      const v = Number(value);
+      if(!isFinite(v)) return null;
+
+      let C, F, K, R;
+      switch(from){
+        case 'C':
+          C = v;
+          K = v + 273.15;
+          F = (v * 9/5) + 32;
+          R = (v + 273.15) * 9/5;
+          break;
+        case 'F':
+          C = (v - 32) * 5/9;
+          K = C + 273.15;
+          F = v;
+          R = v + 459.67;
+          break;
+        case 'K':
+          K = v;
+          C = v - 273.15;
+          F = (C * 9/5) + 32;
+          R = v * 9/5;
+          break;
+        case 'R':
+          R = v;
+          K = v * 5/9;
+          C = K - 273.15;
+          F = v - 459.67;
+          break;
+        default:
+          return null;
+      }
+      return { C, F, K, R };
+    }
+
+    // --- DOM refs ---
+    const valueInput = $('#value');
+    const fromSelect = $('#from');
+    const decSel = $('#decimals');
+    const convertBtn = $('#convertBtn');
+    const clearBtn = $('#clearBtn');
+    const outC = $('#outC');
+    const outF = $('#outF');
+    const outK = $('#outK');
+    const outR = $('#outR');
+
+    // --- Behaviors ---
+    function render(results){
+      const d = parseInt(decSel.value, 10) || 0;
+      if(!results){
+        [outC, outF, outK, outR].forEach(el => el.value = '—');
+        return;
+      }
+      outC.value = String(roundTo(results.C, d));
+      outF.value = String(roundTo(results.F, d));
+      outK.value = String(roundTo(results.K, d));
+      outR.value = String(roundTo(results.R, d));
+    }
+
+    function run(){
+      const v = valueInput.value.trim();
+      const f = fromSelect.value;
+      const res = convertAll(v, f);
+      render(res);
+    }
+
+    function clearAll(){
+      valueInput.value = '';
+      render(null);
+      valueInput.focus();
+    }
+
+    // --- Events ---
+    ['input','change'].forEach(evt => {
+      valueInput.addEventListener(evt, run);
+      fromSelect.addEventListener(evt, run);
+      decSel.addEventListener(evt, run);
+    });
+
+    convertBtn.addEventListener('click', run);
+    clearBtn.addEventListener('click', clearAll);
+
+    valueInput.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter') run();
+    });
+
+    // Copy single
+    $$('#outputs .btn[data-copy]').forEach(btn => {
+      btn.addEventListener('click', async ()=>{
+        const target = $(btn.getAttribute('data-copy'));
+        try{
+          await navigator.clipboard.writeText(target.value);
+          btn.textContent = 'Copied!';
+          setTimeout(()=> btn.textContent = 'Copy', 900);
+        }catch(err){
+          alert('Clipboard not available');
+        }
+      });
+    });
+
+    // Copy all
+    $('#copyAll').addEventListener('click', async (e)=>{
+      e.preventDefault();
+      const lines = [
+        `Celsius: ${outC.value}`,
+        `Fahrenheit: ${outF.value}`,
+        `Kelvin: ${outK.value}`,
+        `Rankine: ${outR.value}`
+      ].join("\n");
+      try{
+        await navigator.clipboard.writeText(lines);
+        const link = e.currentTarget; link.textContent = 'Copied!';
+        setTimeout(()=> link.textContent = 'Copy all', 900);
+      }catch(err){ alert('Clipboard not available'); }
+    });
+
+    // Demo: quick paste common values
+    $('#pasteDemo').addEventListener('click', (e)=>{
+      e.preventDefault();
+      const demos = [
+        {v: 0, u:'C'},      // Freezing water
+        {v: 100, u:'C'},    // Boiling water
+        {v: 98.6, u:'F'},   // Avg human body
+        {v: 273.15, u:'K'}, // 0 °C in Kelvin
+        {v: 491.67, u:'R'}  // 32 °F in Rankine
+      ];
+      const pick = demos[Math.floor(Math.random()*demos.length)];
+      valueInput.value = pick.v;
+      fromSelect.value = pick.u;
+      run();
+    });
+
+    // Initialize
+    run();
+  </script>
+</body>
+</html>

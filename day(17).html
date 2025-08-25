@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Bar with For Loop</title>
+    <style>
+        .progressContainer {
+            width: 100%;
+            background-color: lightgray;
+        }
+        .progressBar {
+            width: 0%;
+            height: 30px;
+            background-color: blue;
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <button id="startBtn" type="button">Start</button>
+    <div class="progressContainer">
+        <div id="progressBar" class="progressBar">0%</div>
+    </div>
+
+    <script>
+    document.getElementById("startBtn").onclick = function() {
+        for (let percent = 0; percent <= 100; percent++) {
+            setTimeout(function() {
+                document.getElementById("progressBar").style.width = percent + "%";
+                document.getElementById("progressBar").innerHTML = percent + "%";
+            }, percent * 50); // delay increases for each loop step
+        }
+    };
+    </script>
+</body>
+</html>

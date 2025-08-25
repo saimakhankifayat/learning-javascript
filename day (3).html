@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tables</title>
+</head>
+<body>
+    <div id="results"></div>
+</body>
+</html>
+<script>
+var gResults="";
+
+
+//table of two.
+gResults+="<h1>Table of 2</h1>";
+for (let i=1; i<=20;i++){
+ gResults+="<br>2x"+i+" = "+(2*i);
+}
+    
+	//understanding nested loops.
+	//create tables of numbers from 2 - 10 and each table should be from 1 to 20 .
+	//using for loop
+	gResults+="Nested for loop";
+	for(let num=2;num<=10;num++ ){
+	 gResults+="<h1>Table of "+num+" </h1>";
+		for(let counter=1;counter<=20;counter++ ){
+		 gResults+="<br>"+num+"x"+counter+" = "+(num*counter);
+		}
+	}
+	
+	//now using nested while loop.
+	
+	gResults+="<hr> now using while loop";
+	let number=2;
+	let count=1;
+	while(number<=10){ //parent loop.
+		count=1;
+			while(count<=20){//child or nested loop.
+			 	gResults+="<br>"+number+"x"+count+" = "+(number*count);
+				count++;
+			} //end of child loop.
+		number++;
+	
+	}
+	
+	document.getElementById("results").innerHTML=gResults;
+	
+</script>

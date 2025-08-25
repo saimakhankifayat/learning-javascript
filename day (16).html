@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tables</title>
+</head>
+<body>
+    <div id="results"></div>
+</body>
+</html>
+<script>
+var gResults="";
+
+
+	const cars=["bmw","toyota","ferrai","benz"];
+	const colors=["blue","purple","red","black"];
+	const years=[1997,2000,2006,2007];
+	
+	//now using nested while loop.
+	
+	gResults+="<hr> now using while loop";
+	let car=0;
+	let color=0;
+	let  year=0;
+	gResults+="<br><hr><table border=1>";
+	while(car<=3){ //parent loop.
+		gResults+="<tr><td>";
+		color=0;
+			while(color<=3){//child or nested loop.
+				gResults+="<br><hr><table border=1>";
+
+			year=0;
+				while(year<=3 ){
+						gResults+="<tr><td>";
+
+						//gResults+="<br>"+cars[car]+"&nbsp;&nbsp;&nbsp;&nbsp;"+colors[color]+"&nbsp;&nbsp;&nbsp;&nbsp;"+years[year];
+							gResults += "<br><span style='color:" + colors[color] + "'>" 
+									  + cars[car] + "&nbsp;&nbsp;&nbsp;&nbsp;" 
+									  + colors[color] + "&nbsp;&nbsp;&nbsp;&nbsp;" 
+									  + years[year] + "</span>";
+						year++;
+								gResults+="</td></tr>";
+
+				}
+				color++;
+					gResults+="</table>";
+
+			} //end of child loop.
+		car++;
+		gResults+="<hr>";
+		gResults+="</td></tr>";
+		
+	
+	}//end of car loop.
+	gResults+="</table>";
+	
+	document.getElementById("results").innerHTML=gResults;
+	
+</script>

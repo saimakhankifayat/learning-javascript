@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+        }
+        .leftSide, .rightSide{
+            width: 30%;
+            height: 50%;
+        }
+        .centerArea{
+            width: 30%;
+            height: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .centerArea input[type="text"]{
+            width: 90%;
+            height: 3rem;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+        textarea{
+            width: 100%;
+            height: 100%;
+        }
+        #input_text{
+            width: 80%;
+            height: 20%;
+            margin-bottom: 20px;
+        }
+
+        button{
+            width: 80%;
+            height: 20%;
+            margin-bottom: 10px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="leftSide">
+            <label for="left_text">Left Side Text</label>
+            <textarea id="left_text" col="10" row="20"></textarea>
+        </div>
+        <div class="centerArea">
+            <label for="input_text" >Enter Text</label>
+            <input type="text" id="center_text">
+            <button type="button" id="push_left" onclick="addToLeft()">Push To LEFT</button>
+            <button type="button" id="push_right" onclick="addToRight()">Push To right</button>
+            <button type="button" id="sort_array" onclick="sortArray()">Sort Array</button>
+        </div>
+        <div class="rightSide">
+            <label for="right_text">Right Side Text</label>
+            <textarea id="right_text" col="10" row="20"></textarea>
+           
+
+        </div>
+
+    </div>
+    
+</body>
+</html>
+<script>
+
+function addToLeft(){
+    let leftTextArea = document.getElementById("left_text");
+    let centerInput = document.getElementById("center_text").value;
+    console.log (centerInput);
+    if(centerInput.valueOf()>0){
+        leftTextArea.style.backgroundColor = "lightblue";
+            leftTextArea.value += centerInput.trim()+ "\n";
+            
+    } else {
+        leftTextArea.style.backgroundColor = "lightgreen";
+    }
+     document.getElementById("center_text").value = ""; 
+
+}
+function addToRight(){
+    let rightTextArea = document.getElementById("right_text");
+    let centerInput = document.getElementById("center_text").value;
+    console.log (centerInput);
+    if(centerInput.valueOf()>0){
+        rightTextArea.style.backgroundColor = "lightblue";
+            rightTextArea.value += centerInput.trim() + "\n";
+
+    } else {
+        rightTextArea.style.backgroundColor = "lightgreen";
+    }
+     document.getElementById("center_text").value = ""; 
+
+}
+
+function sortArray(){
+    let leftTextArea = document.getElementById("left_text");
+    let rightTextArea = document.getElementById("right_text");
+    let leftArray = leftTextArea.value.split("\n").filter(item => item.trim() !== "");
+    let rightArray = rightTextArea.value.split("\n").filter(item => item.trim() !== "");
+    leftArray.sort();   
+    rightArray.sort();
+    leftTextArea.value = leftArray.join("\n") + "\n";
+    rightTextArea.value = rightArray.join("\n") + "\n";
+}
+
+</script>

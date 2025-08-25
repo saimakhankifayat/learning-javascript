@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>day14</title>
+</head>
+<body>
+    <div id="results"></div>
+</body>
+</html>
+
+<script>
+  var gResults="";
+
+/*
+understanding for loop
+syntax:
+		for(conditon ){
+			loop body
+		}
+		Example condition:
+							i <=10
+	or
+	for( initialize variable; check conditon; increment variable ){
+			loop body
+		}	
+*/
+
+//print my name 20 times
+
+for(var i=10;i<=20;i++){
+
+gResults+="<br>"+i+" saima";
+
+}
+
+for(var j=0;j<=10;j++ ){
+	gResults+="<br>2x"+j+"="+2*j;
+
+}
+
+document.getElementById("results").innerHTML=gResults;
+
+
+</script>

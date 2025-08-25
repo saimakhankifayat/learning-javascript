@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple POS Screen</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #f4f4f4;
+    }
+
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+    }
+
+    #products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      margin: 0.5rem 0;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #2980b9;
+    }
+
+    #addProductForm {
+      display: none; /* hidden by default */
+      background: white;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    #offer {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #27ae60;
+      color: white;
+      border-radius: 6px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>POS Screen</h1>
+    <button class="btn" onclick="toggleForm()">Add Product</button>
+    <input type="date" id="saleDate" onchange="checkOffer()">
+  </header>
+
+  <div class="container">
+    <div id="products"></div>
+
+    <div id="addProductForm">
+      <h3>Add a New Product</h3>
+      <label>Name: </label><br>
+      <input type="text" id="pName"><br><br>
+
+      <label>Price: </label><br>
+      <input type="number" id="pPrice"><br><br>
+
+      <label>Image URL: </label><br>
+      <input type="text" id="pImage"><br><br>
+
+      <button class="btn" onclick="addProduct()">Add</button>
+    </div>
+
+    <div id="offer"></div>
+  </div>
+
+  <script>
+    // Initial products array with dummy data
+    let products = [
+      {name:"Apple", price:1, img:"https://via.placeholder.com/150/FF0000/FFFFFF?text=Apple"},
+      {name:"Banana", price:2, img:"https://via.placeholder.com/150/FFFF00/000000?text=Banana"},
+      {name:"Orange", price:3, img:"https://via.placeholder.com/150/FFA500/FFFFFF?text=Orange"},
+      {name:"Grapes", price:4, img:"https://via.placeholder.com/150/800080/FFFFFF?text=Grapes"},
+      {name:"Mango", price:5, img:"https://via.placeholder.com/150/FFD700/000000?text=Mango"},
+      {name:"Strawberry", price:6, img:"https://via.placeholder.com/150/FF69B4/FFFFFF?text=Strawberry"},
+      {name:"Watermelon", price:7, img:"https://via.placeholder.com/150/32CD32/FFFFFF?text=Watermelon"},
+      {name:"Pineapple", price:8, img:"https://via.placeholder.com/150/DAA520/FFFFFF?text=Pineapple"},
+      {name:"Cherry", price:9, img:"https://via.placeholder.com/150/8B0000/FFFFFF?text=Cherry"},
+      {name:"Kiwi", price:10, img:"https://via.placeholder.com/150/006400/FFFFFF?text=Kiwi"}
+    ];
+
+    // Function to render products on screen
+    function renderProducts() {
+      const productDiv = document.getElementById("products");
+      productDiv.innerHTML = "";
+      products.forEach((p, index) => {
+        productDiv.innerHTML += `
+          <div class="card">
+            <img src="${p.img}" alt="${p.name}">
+            <h4>${p.name}</h4>
+            <p>Price: $${p.price}</p>
+          </div>
+        `;
+      });
+    }
+
+    // Toggle product form
+    function toggleForm() {
+      const form = document.getElementById("addProductForm");
+      form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
+    }
+
+    // Add a new product
+    function addProduct() {
+      let name = document.getElementById("pName").value;
+      let price = document.getElementById("pPrice").value;
+      let img = document.getElementById("pImage").value;
+
+      if(name && price && img) {
+        products.push({name:name, price:parseFloat(price), img:img});
+        renderProducts();
+        toggleForm(); // hide form after adding
+      } else {
+        alert("Please fill all fields!");
+      }
+    }
+
+    // Check for offers based on date
+    function checkOffer() {
+      const date = document.getElementById("saleDate").value;
+      const offerDiv = document.getElementById("offer");
+
+      // Example: if date is 2025-12-25, show Christmas offer
+      if(date === "2025-12-25") {
+        offerDiv.style.display = "block";
+        offerDiv.innerHTML = "🎄 Christmas Special: 50% Off!";
+      } 
+      else if(date === "2025-08-14") {
+        offerDiv.style.display = "block";
+        offerDiv.innerHTML = "🎉 Independence Day Offer: Buy 1 Get 1 Free!";
+      } 
+      else {
+        offerDiv.style.display = "none";
+      }
+    }
+
+    // Initial render
+    renderProducts();
+  </script>
+</body>
+</html>

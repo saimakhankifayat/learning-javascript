@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" placeholder="type here.." id="value1" name="value1">
+    <input type="text" placeholder="type here.." id="value2" name="value2">
+    <input type="text" placeholder="type here.." id="value3" name="value3">
+	<button type="button" id="button1" > save</button>
+	<button type="button" id="button2" > print</button>
+	<button type="button" id="button3" > value</button>
+	<div id="results" ></div>
+</body>
+</html>
+<script>
+var gResults="";
+var myName="saima kifayat";
+var age = 16;
+var subject1=50;
+var subject2=50;
+var subject3=50;
+var subject4=50;
+var subject5=51;
+var subject6=50;
+var totalMarks= 600;
+var obtainMarks= subject1+subject2+subject3+subject4+subject5+subject6;
+var percentage= obtainMarks/totalMarks*100;
+var grade="";
+	if(percentage>50 ){
+	grade="pass";
+	
+	}else {
+	grade="fail";
+	}
+	gResults="<br>Using var keyword."+grade;
+	//now learning let
+	let a=1;
+	let b=2;
+	let c=a+b;
+	gResults+="<br>Using let keyword. "+c;
+	
+	
+	{
+		var k=1000;
+		let j=10;
+		let c= j+1;
+			gResults+="<br>Using block-let keyword. "+c;
+
+			gResults+="<br>Using block-var totalMarks. "+totalMarks;
+					totalMarks=800;
+
+	}
+	
+	//gResults+="trying to accsess let j."+j;
+	gResults+="<br>trying to accsess var k."+k;
+	gResults+="<br>trying to accsess global variable totalMarks."+totalMarks;
+	
+	//now learnig const
+	
+	{
+	const j=15;
+	const k=10;
+	let l=j+k;
+	
+	gResults+="<br>const L :"+l;
+	l=30;
+		gResults+="<br>const L again :"+l;
+
+	
+	}
+	
+	//final result
+	document.getElementById("results").innerHTML=gResults;
+	
+</script>
