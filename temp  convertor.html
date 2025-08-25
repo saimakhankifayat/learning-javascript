@@ -112,34 +112,39 @@ function convertTemp(toUnit){
     console.log(t);
 //convert from Celsius to Fahrenheit
 if (fromUnit === 'C' && toUnit === 'F') {
-    r =(((t) * 9/5) + 32 ).toFixed(2)+ " °F";
+    r =(((t) * 9/5) + 32 );
+    r=r.toFixed(2)+ " °F";
     document.getElementById("result").innerHTML = r;
 }
 //convert from Fahrenheit to Celsius
 else if (fromUnit === 'F' && toUnit === 'C') {
-    r = ((t) - 32) * 5/9 + " °C";
-    
+    r = ((t) - 32) * 5/9 ;
+    r=r.toFixed(2)+ " °C";
     document.getElementById("result").innerHTML = r;
 }
 //convet from Celsius to Kelvin
     if(fromUnit === 'C' && toUnit === 'K'){
-        r= (t + 273.15 )+ " K";
+        r= (t + 273.15 );
+        r=r.toFixed(2)+ " K";
         document.getElementById("result").innerHTML = r;
         console.log(t);
     }   
 //convet from Kelvin to Celsius
     if(fromUnit === 'K' && toUnit === 'C'){
-        r=  (t - 273.15) + " °C";
+        r=  (t - 273.15) ;
+        r=r.toFixed(2)+ " °C";
         document.getElementById("result").innerHTML = r;
     }
 //convert from Fahrenheit to Kelvin
     if(fromUnit === 'F' && toUnit === 'K'){
-        r= ((t - 32) * 5/9 + 273.15) + " K";
+        r= ((t - 32) * 5/9 + 273.15) ;
+        r=r.toFixed(2)+ " K";
         document.getElementById("result").innerHTML = r;
     }       
 //convert from Kelvin to Fahrenheit
     if(fromUnit === 'K' && toUnit === 'F'){
-        r= ((t - 273.15) * 9/5 + 32) + " °F";
+        r= ((t - 273.15) * 9/5 + 32) ;
+        r=r.toFixed(2)+ " °F";
         document.getElementById("result").innerHTML = r;
     }
      
